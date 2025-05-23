@@ -26,5 +26,12 @@ namespace DotNetBookstore.Controllers
             ViewBag.category = category;
             return View();
         }
+
+       
+        public IActionResult Create()
+        {
+            // display the create category form
+            return View();
+        }
     }
 }
