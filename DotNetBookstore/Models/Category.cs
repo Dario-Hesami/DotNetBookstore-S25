@@ -3,12 +3,28 @@
 namespace DotNetBookstore.Models
 {
     public class Category
+
     {
-        //[Range (100, 500)]
+
+        // PK
+
         public int CategoryId { get; set; }
-        [Display (Name = "Category Name", Prompt ="Enter a category name")]
-        [Required(ErrorMessage = "Please enter a category name")]
-        public string Name { get; set; }
+
+
+
+        [Required(ErrorMessage = "A customized error message")]
+
+        [MaxLength(100)]
+
+        public string Name { get; set; } = string.Empty;
+
+
+
+        // Navigation property: A category can have many books (optional from the category side)
+
+        public ICollection<Book> Books { get; set; } = [];
 
     }
+
+
 }
