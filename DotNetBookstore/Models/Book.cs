@@ -26,7 +26,7 @@ namespace DotNetBookstore.Models
 
         [Required]
 
-        [MaxLength(150)]
+        [MaxLength(200)]
 
         public string Title { get; set; } = string.Empty;
 
