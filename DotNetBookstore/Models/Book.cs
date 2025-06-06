@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel.DataAnnotations;
 
 namespace DotNetBookstore.Models
 {
@@ -74,19 +75,19 @@ namespace DotNetBookstore.Models
 
 
         // Navigation property: each book belongs to one category (mandatory from the book side)
-
+        [ValidateNever]
         public Category Category { get; set; } = null!;
 
 
 
         // Navigation property: Book may appear in many CartItems (optional from the book side)
-
+        [ValidateNever]
         public ICollection<CartItem> CartItems { get; set; } = [];
 
 
 
         // Navigation property: Book may appear in many OrderDetails (optional from the book side)
-
+        [ValidateNever]
         public ICollection<OrderDetail> OrderDetails { get; set; } = [];
 
     }
