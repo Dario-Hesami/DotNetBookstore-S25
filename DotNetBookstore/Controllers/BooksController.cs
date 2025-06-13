@@ -57,7 +57,7 @@ namespace DotNetBookstore.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("BookId,Author,Title,Image,Price,MatureContent,CategoryId")] Book book)
+        public async Task<IActionResult> Create([Bind("BookId,Author,Title,Price,MatureContent,CategoryId")] Book book, IFormFile? image)
         {
             if (ModelState.IsValid)
             {
@@ -159,6 +159,21 @@ namespace DotNetBookstore.Controllers
         private bool BookExists(int id)
         {
             return _context.Books.Any(e => e.BookId == id);
+        }
+
+        private static string UploadImage(IFormFile image)
+        {
+            // Use globally unique identifier (GUID) to create a unique file name
+            // e.g. 217647565dsfhfss7878adkj-art.jpg
+            var fileName = Guid.NewGuid().ToString() + "-" + image.FileName;
+            // Set destination path dynamically so it runs on any systems
+            var uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroots/images/books", fileName);
+            using (var stream = new FileStream(uploadPath, FileMode.Create))
+            {
+                image.CopyTo(stream);
+            }
+            // Return new file name to store in the database
+            return fileName;
         }
     }
 }
