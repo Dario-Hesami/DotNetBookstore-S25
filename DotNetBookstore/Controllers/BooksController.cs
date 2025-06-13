@@ -167,7 +167,7 @@ namespace DotNetBookstore.Controllers
             // e.g. 217647565dsfhfss7878adkj-art.jpg
             var fileName = Guid.NewGuid().ToString() + "-" + image.FileName;
             // Set destination path dynamically so it runs on any systems
-            var uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroots/images/books", fileName);
+            var uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/books", fileName);
             using (var stream = new FileStream(uploadPath, FileMode.Create))
             {
                 image.CopyTo(stream);
