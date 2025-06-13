@@ -59,9 +59,22 @@ namespace DotNetBookstore.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("BookId,Author,Title,Price,MatureContent,CategoryId")] Book book, IFormFile? image)
         {
+            // Check if the image is provided and valid
             if (ModelState.IsValid)
             {
+                // Check if an image was uploaded
+                if (image != null && image.Length > 0)
+                {
+                    // Upload the image and get the file name
+                    book.Image = UploadImage(image);
+                }
+                else
+                {
+                    // If no image is provided, set Image to null
+                    book.Image = null;
+                }
                 _context.Add(book);
+                // Save changes to the database
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
