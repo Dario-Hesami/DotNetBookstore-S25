@@ -3,6 +3,8 @@ using DotNetBookstore.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Stripe;
+using Stripe.Checkout;
 
 namespace DotNetBookstore.Controllers
 {
@@ -13,11 +15,16 @@ namespace DotNetBookstore.Controllers
         // This is used to access the database
         private readonly ApplicationDbContext _context;
 
+        // class level config object to read Stripe SecretKey from appsettings.json
+        // This is used to configure Stripe payment processing
+        private readonly IConfiguration _configuration;
+
         // constructor that accepts a DbContext instance
         // This allows dependency injection to provide the context
-        public ShopController(ApplicationDbContext context)
+        public ShopController(ApplicationDbContext context, IConfiguration configuration)
         {
             _context = context;
+            _configuration = configuration;
         }
         public IActionResult Index()
         {
